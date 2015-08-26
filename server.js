@@ -3,6 +3,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var mongoose     = require('mongoose');
+var bodyParser   = require('body-parser');
 
 var configDB     = require('./config/database.js');
 mongoose.connect(configDB.url);
@@ -13,8 +14,10 @@ var port = process.env.PORT || 8080;
 
 app.use( morgan('dev') );
 app.use( cookieParser() );
+app.use(bodyParser.urlencoded( {extended: false} ));
 app.use( session({secret: 'anyStringOfText', saveUninitialized: true, resave: true}) );
 
+app.set('view engine', 'ejs');
 
 // REPLACED
 //
